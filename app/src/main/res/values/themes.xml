@@ -20,4 +20,33 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="LegalDiaryTheme.PopUpOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="toolbar" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">#1976d2</item>
+        <item name="android:textColorPrimary">#1976d2</item>
+        <item name="actionMenuTextColor">#1976d2</item>
+        <item name="colorControlNormal">#1976d2</item>
+        <item name="colorControlActivated">#1976d2</item>
+        <item name="colorControlHighlight">#1976d2</item>
+        <!-- change the textColor -->
+    </style>
+
+    <style name="scrollview" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">#ffffff</item>
+        <item name="android:textColorPrimary">#1976d2</item>
+        <item name="actionMenuTextColor">#ffffff</item>
+        <item name="colorControlNormal">#1976d2</item>
+        <item name="colorControlActivated">#1976d2</item>
+        <item name="colorControlHighlight">#1976d2</item>
+        <!-- change the textColor -->
+    </style>
 </resources>

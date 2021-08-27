@@ -39,5 +39,13 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // project dependencies
-//    api 'com.google.android.material:material:1.1.0-alpha06'
+    implementation 'com.squareup.picasso:picasso:2.3.2'
+    implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+    implementation 'com.mcxiaoke.volley:library:1.0.19'
+    implementation 'net.gotev:uploadservice:3.0.3'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'commons-codec:commons-codec:1.10'
+    implementation 'org.apache.httpcomponents:httpcore:4.4.10'
 }
