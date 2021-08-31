@@ -4,6 +4,7 @@ package com.innova.lawyerhiringsystem;
 *  Contains animation and hidden fields for both roles
 *  Mode: Firebase Email Auth
 * */
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -13,6 +14,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.animation.Animation;
@@ -28,6 +30,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +47,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Register extends AppCompatActivity {
 
+    private FirebaseAuth mAuth;
     ArrayAdapter<String> proAdapter;
     ArrayAdapter<String> cityAdapter;
     CheckBox accept;
@@ -194,7 +203,7 @@ public class Register extends AppCompatActivity {
                     enteredData.put("Exp", exp.getText().toString());
                     enteredData.put("Address1", officeAddress.getText().toString().trim());
 
-                    register();
+                    register(enteredData);
                 }
             }
         });
@@ -269,13 +278,37 @@ public class Register extends AppCompatActivity {
         return m.matches();
     }
 
-    public void register() {
+    public void register(HashMap<String, String> userData) {
         // Registration Logic will be added here
 
-        final ProgressDialog pd = new ProgressDialog(Register.this);
-        pd.setMessage("Please wait..");
-        pd.setCancelable(false);
-        pd.show();
+
+        String email = userData.get("EmailId");
+        String password = userData.get("Password");
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        pd.dismiss();
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d("FirebaseAuth", "createUserWithEmail:success");
+
+                            Toast.makeText(Register.this, "Account Created.",
+                                    Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Register.this,WelcomeScreen.class));
+                            finish();
+//                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w("FirebaseAuth", "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(Register.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+//                            updateUI(null);
+                        }
+                    }
+                });
+
     }
 }
 
