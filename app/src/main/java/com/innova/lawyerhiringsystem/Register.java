@@ -35,6 +35,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -294,6 +296,9 @@ public class Register extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("FirebaseAuth", "createUserWithEmail:success");
 
+                            //pushing profile to firebase database
+                            pushProfile(userData);
+
                             Toast.makeText(Register.this, "Account Created.",
                                     Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(Register.this,WelcomeScreen.class));
@@ -308,6 +313,14 @@ public class Register extends AppCompatActivity {
                         }
                     }
                 });
+
+    }
+
+    public void pushProfile(HashMap<String, String> userData) {
+        //the function writes profile data to firebase database
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("users");
+        ref.child(userData.get("Name")).setValue(userData);
 
     }
 }
