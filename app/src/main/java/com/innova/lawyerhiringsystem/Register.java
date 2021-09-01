@@ -195,15 +195,15 @@ public class Register extends AppCompatActivity {
                     pd.show();
 
                     //adding data to the hashmap -- firebase easy push
-                    enteredData.put("Name", name.getText().toString().trim());
-                    enteredData.put("EmailId", email.getText().toString().trim());
-                    enteredData.put("Password", password.getText().toString());
-                    enteredData.put("Mobile", "" + phone.getText().toString());
-                    enteredData.put("City", city.getText().toString().trim());
-                    enteredData.put("Profession", Integer.valueOf(spnr_profession.getSelectedItemPosition()).toString());
-                    enteredData.put("LawyerId", spnr_lawyer_loc.getSelectedItem().toString() + "/" + lawyer_id_a.getText().toString().toUpperCase().trim() + "/" + lawyer_id_b.getText().toString());
-                    enteredData.put("Exp", exp.getText().toString());
-                    enteredData.put("Address1", officeAddress.getText().toString().trim());
+                    enteredData.put("name", name.getText().toString().trim());
+                    enteredData.put("email", email.getText().toString().trim());
+                    enteredData.put("password", password.getText().toString());
+                    enteredData.put("mobile", "" + phone.getText().toString());
+                    enteredData.put("city", city.getText().toString().trim());
+                    enteredData.put("profession", Integer.valueOf(spnr_profession.getSelectedItemPosition()).toString());
+                    enteredData.put("lawyerId", spnr_lawyer_loc.getSelectedItem().toString() + "/" + lawyer_id_a.getText().toString().toUpperCase().trim() + "/" + lawyer_id_b.getText().toString());
+                    enteredData.put("experience", exp.getText().toString());
+                    enteredData.put("address", officeAddress.getText().toString().trim());
 
                     register(enteredData);
                 }
@@ -284,8 +284,8 @@ public class Register extends AppCompatActivity {
         // Registration Logic will be added here
 
 
-        String email = userData.get("EmailId");
-        String password = userData.get("Password");
+        String email = userData.get("email");
+        String password = userData.get("password");
         mAuth = FirebaseAuth.getInstance();
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -296,8 +296,9 @@ public class Register extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("FirebaseAuth", "createUserWithEmail:success");
 
+                            FirebaseUser user= mAuth.getCurrentUser();
                             //pushing profile to firebase database
-                            pushProfile(userData);
+                            pushProfile(userData, user.getUid());
 
                             Toast.makeText(Register.this, "Account Created.",
                                     Toast.LENGTH_SHORT).show();
@@ -316,11 +317,11 @@ public class Register extends AppCompatActivity {
 
     }
 
-    public void pushProfile(HashMap<String, String> userData) {
+    public void pushProfile(HashMap<String, String> userData, String uid) {
         //the function writes profile data to firebase database
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("users");
-        ref.child(userData.get("Name")).setValue(userData);
+        ref.child(uid).setValue(userData);
 
     }
 }

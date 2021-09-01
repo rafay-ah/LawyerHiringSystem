@@ -33,6 +33,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.innova.lawyerhiringsystem.model.Lawyer;
 
 public class Login extends AppCompatActivity {
 
@@ -176,8 +183,8 @@ public class Login extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(Login.this, "Login successful.",
                                     Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Login.this, ClientDashboard.class));
-                            finish();
+                            getRole(user);
+
 //                            updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -189,6 +196,41 @@ public class Login extends AppCompatActivity {
                         }
                     }
                 });
+
+    }
+
+    public void getRole(FirebaseUser user)
+    {
+        // this function will determine if user being logged in 'lawyer' or 'client'
+        // then will be redirected to different dashboards
+        String userIdentifier = user.getUid();
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("users");
+
+        ref.child(userIdentifier).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Lawyer profile = dataSnapshot.getValue(Lawyer.class);
+                System.out.println(profile);
+                if (profile.getProfession().equals("0"))
+                {
+                    //go to client dashboard if logged in user has role "Client"
+                    startActivity(new Intent(Login.this, ClientDashboard.class));
+                    finish();
+                }
+                else{
+                    // go to lawyer dashboard
+                    startActivity(new Intent(Login.this, LawyerDashboard.class));
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
 
     }
 }
