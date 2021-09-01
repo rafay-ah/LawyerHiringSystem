@@ -51,6 +51,7 @@ dependencies {
     implementation 'commons-codec:commons-codec:1.10'
     implementation 'org.apache.httpcomponents:httpcore:4.4.10'
     implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
 
     // firebase dependencies
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
