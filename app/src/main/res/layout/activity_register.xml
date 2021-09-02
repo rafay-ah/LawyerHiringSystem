@@ -71,11 +71,12 @@ tools:context=".Register">
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:gravity="bottom">
+
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/user_shape"
-                android:layout_margin="8dp"/>
+                android:layout_width="17dp"
+                android:layout_height="16dp"
+                android:layout_margin="8dp"
+                android:src="@drawable/user_shape" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

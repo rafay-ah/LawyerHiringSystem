@@ -1,49 +1,52 @@
 package com.innova.lawyerhiringsystem.fragments;
-
+/*Role Specific Profile fragment
+* Different layout files will be inflated depending upon user role
+* The fragment will enable the user to view their profile data
+* entered at signup.
+*
+* UserID [uid] is used as node key to retrieve data
+* */
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.innova.lawyerhiringsystem.ClientDashboard;
+import com.innova.lawyerhiringsystem.LawyerDashboard;
+import com.innova.lawyerhiringsystem.Login;
 import com.innova.lawyerhiringsystem.R;
+import com.innova.lawyerhiringsystem.model.Lawyer;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProfileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public static boolean isLawyer;
+    public  Lawyer profile = new Lawyer();
+    public  static Lawyer cProfile = new Lawyer();
 
     public ProfileFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ProfileFragment newInstance(String param1, String param2) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,16 +54,83 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        getProfile();
+        View rootView = null;
+        
+        if (isLawyer){ // logged in user has role "lawyer"
+            rootView = inflater.inflate(R.layout.fragment_lawyer_profile, container, false);
+
+            // populating UI fields for lawyer
+            TextView lName = rootView.findViewById(R.id.profile_lawyername);
+            TextView lEmail = rootView.findViewById(R.id.profile_lawyeremail);
+            TextView lPhone = rootView.findViewById(R.id.profile_lawyermobile);
+            TextView lCity = rootView.findViewById(R.id.profile_lawyercity);
+            TextView lExperience = rootView.findViewById(R.id.profile_lawyerexperience);
+            TextView lId = rootView.findViewById(R.id.profile_lawyerid);
+            TextView lLocation= rootView.findViewById(R.id.profile_lawyeraddress);
+
+            lName.setText(String.valueOf(cProfile.getName()));
+            lEmail.setText(String.valueOf(cProfile.getEmail()));
+            lPhone.setText(String.valueOf(cProfile.getMobile()));
+            lCity.setText(String.valueOf(cProfile.getCity()));
+            lExperience.setText(String.valueOf(cProfile.getExperience()));
+            lId.setText(String.valueOf(cProfile.getLawyerId()));
+            lLocation.setText(String.valueOf(cProfile.getAddress()));
+
+        }
+        else{ // logged in user has role "Client"
+            rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+
+            // populating UI fields for client
+            TextView cName = rootView.findViewById(R.id.profile_name);
+            TextView cEmail = rootView.findViewById(R.id.profile_email);
+            TextView cPhone = rootView.findViewById(R.id.profile_mobile);
+            TextView cCity = rootView.findViewById(R.id.profile_city);
+
+            cName.setText(String.valueOf(cProfile.getName()));
+            cEmail.setText(String.valueOf(cProfile.getEmail()));
+            cPhone.setText(String.valueOf(cProfile.getMobile()));
+            cCity.setText(String.valueOf(cProfile.getCity()));
+        }
+        return  rootView;
+
     }
+
+    public void getProfile()
+    {
+        // Establish currently logged in user
+        // retrieve its profile data using [uID] -> saves it in profile object
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("users");
+
+        // unattached call
+        ref.child(user.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    profile = task.getResult().getValue(Lawyer.class);
+
+                    // determining user role {Client/Lawyer}
+                    isLawyer = profile.getProfession().equals("1");
+                    cProfile = profile;
+                }
+            }
+        });
+    }
+
 }
