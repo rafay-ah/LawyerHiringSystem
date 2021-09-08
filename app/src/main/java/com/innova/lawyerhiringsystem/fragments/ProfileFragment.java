@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.innova.lawyerhiringsystem.ClientDashboard;
+import com.innova.lawyerhiringsystem.GiveFeedback;
 import com.innova.lawyerhiringsystem.LawyerDashboard;
 import com.innova.lawyerhiringsystem.Login;
 import com.innova.lawyerhiringsystem.R;
@@ -95,6 +96,14 @@ public class ProfileFragment extends Fragment {
                 }
             });
 
+            // feedback button inflation for Lawyer
+            Button feedback = (Button) rootView.findViewById(R.id.lawyer_feedback);
+            feedback.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), GiveFeedback.class));
+                }
+            });
+
 
         }
         else{ // logged in user has role "Client"
@@ -117,6 +126,14 @@ public class ProfileFragment extends Fragment {
                 public void onClick(View v) {
                     FirebaseAuth.getInstance().signOut();
                     startActivity(new Intent(getActivity(), WelcomeScreen.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                }
+            });
+
+            // feedback button inflation
+            Button feedback = (Button) rootView.findViewById(R.id.client_feedback);
+            feedback.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), GiveFeedback.class));
                 }
             });
         }
