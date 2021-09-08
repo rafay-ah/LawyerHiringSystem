@@ -139,6 +139,17 @@
 
             <Button
                 android:layout_gravity="right"
+                android:id="@+id/client_feedback"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/blue_button"
+                android:textColor="#ffffff"
+                android:drawableLeft="@drawable/describe"
+                android:text="Feedback" />
+
+            <Button
+                android:layout_gravity="right"
                 android:id="@+id/client_logout"
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
@@ -147,7 +158,7 @@
                 android:textColor="#ffffff"
                 android:drawableLeft="@drawable/signout"
 
-                android:text="Logout" />
+                android:text="  Logout  " />
 
         </LinearLayout>
     </ScrollView>

@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import com.innova.lawyerhiringsystem.ClientDashboard;
 import com.innova.lawyerhiringsystem.LawyerDashboard;
 import com.innova.lawyerhiringsystem.Login;
 import com.innova.lawyerhiringsystem.R;
+import com.innova.lawyerhiringsystem.WelcomeScreen;
 import com.innova.lawyerhiringsystem.model.Lawyer;
 
 public class ProfileFragment extends Fragment {
@@ -84,6 +86,16 @@ public class ProfileFragment extends Fragment {
             lId.setText(String.valueOf(cProfile.getLawyerId()));
             lLocation.setText(String.valueOf(cProfile.getAddress()));
 
+            // logout button inflation for lawyer
+            Button button = (Button) rootView.findViewById(R.id.lawyer_logout);
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(getActivity(), WelcomeScreen.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                }
+            });
+
+
         }
         else{ // logged in user has role "Client"
             rootView = inflater.inflate(R.layout.fragment_profile, container, false);
@@ -98,6 +110,15 @@ public class ProfileFragment extends Fragment {
             cEmail.setText(String.valueOf(cProfile.getEmail()));
             cPhone.setText(String.valueOf(cProfile.getMobile()));
             cCity.setText(String.valueOf(cProfile.getCity()));
+
+            // logout button inflation
+            Button button = (Button) rootView.findViewById(R.id.client_logout);
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    FirebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(getActivity(), WelcomeScreen.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                }
+            });
         }
         return  rootView;
 
@@ -131,6 +152,12 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void logout(View view)
+    {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getActivity(), WelcomeScreen.class));
     }
 
 }

@@ -23,7 +23,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LawyerHiringSystem">
-        <activity android:name=".LawyerDashboard"></activity>
+        <activity android:name=".GiveFeedback"></activity>
+        <activity android:name=".LawyerDashboard" />
         <activity android:name=".ClientDashboard" />
         <activity android:name=".Login" />
         <activity android:name=".Register" />
