@@ -1,8 +1,10 @@
 package com.innova.lawyerhiringsystem.fragments;
 /* A Fragment for Posting cases
 *  This fragment wil  write 'bid/ case' to firebase realtime database
+*   Role Specific - client
 * */
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,11 +12,24 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.innova.lawyerhiringsystem.R;
-
+import com.innova.lawyerhiringsystem.Register;
+import com.innova.lawyerhiringsystem.WelcomeScreen;
+import com.innova.lawyerhiringsystem.model.Case;
 
 public class PostJobFragment extends Fragment {
+
+    EditText tittle, city, budget, statement, courtType, lawyerType;
+    Button postcase;
+    private FirebaseAuth mAuth;
 
     public PostJobFragment() {
         // Required empty public constructor
@@ -37,7 +52,28 @@ public class PostJobFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_post_job, container, false);
+        View rootview = inflater.inflate(R.layout.fragment_post_job, container, false);
+        tittle = rootview.findViewById(R.id.case_tittle);
+        city = rootview.findViewById(R.id.city);
+        budget = rootview.findViewById(R.id.budget);
+        statement = rootview.findViewById(R.id.describe);
+        courtType = rootview.findViewById(R.id.court_type);
+        lawyerType = rootview.findViewById(R.id.lawyer_type);
+        // submit case
+        postcase = rootview.findViewById(R.id.postcase);
+        postcase.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+             postCase();
+                tittle.setText("");
+                city.setText("");
+                budget.setText("");
+                statement.setText("");
+                courtType.setText("");
+                lawyerType.setText("");
+            }
+        });
+
+        return rootview;
     }
 
     @Override
@@ -45,4 +81,35 @@ public class PostJobFragment extends Fragment {
         // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
 
     }
+
+    public void postCase(){
+        /* A method to write to database case details
+        * parent node id will be userID
+        * Individual case will further have nodeID as case tittle*/
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user= mAuth.getCurrentUser();
+
+        String caseTittle, caseCity, caseBudget, caseStatment, crtType, lwrType, email, uid;
+        caseTittle = tittle.getText().toString().trim();
+        caseCity = city.getText().toString().trim();
+        caseBudget = budget.getText().toString().trim();
+        caseStatment = statement.getText().toString().trim();
+        crtType = courtType.getText().toString().trim();
+        lwrType = lawyerType.getText().toString().trim();
+        email = user.getEmail();
+        uid = user.getUid();
+        Case clientCase = new Case(caseTittle,caseCity,caseBudget,caseStatment,crtType,lwrType,email,"",true);
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("cases");
+        // 'cases' node structure -> cases/userID/caseTittle
+        ref.child(uid).child(caseTittle).setValue(clientCase);
+
+        Toast.makeText(getActivity(), "Case posted Successfully. In bidding state.",
+                Toast.LENGTH_LONG).show();
+
+    }
+
+
 }

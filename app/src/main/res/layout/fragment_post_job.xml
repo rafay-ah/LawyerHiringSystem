@@ -114,7 +114,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="BUDGET (in PKR Rs)"
+                    android:hint="Budget(in PKR Rs)"
                     >
                     <EditText
                         android:id="@+id/budget"
@@ -141,7 +141,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="DESCRIBE YOUR LEGAL PROBLEM"
+                    android:hint="Describe Your Legal Problem"
                     >
                     <EditText
                         android:id="@+id/describe"
@@ -169,7 +169,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="COURT TYPE"
+                    android:hint="Court Type"
                     >
                     <EditText
                         android:id="@+id/court_type"
@@ -179,12 +179,7 @@
                         android:background="@drawable/edit_text_blue_bg"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -192,35 +187,27 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:orientation="horizontal"
                 android:gravity="bottom">
+
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/court_type"
                     android:layout_margin="8dp"/>
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:paddingLeft="5dp"
-                        android:text="Lawyer Category"
-                        android:textColor="@color/colorPrimaryDark"/>
-
-                    <Spinner
-                        android:id="@+id/spnr_lawyertype"
+                    android:hint="Lawyer Category"
+                    >
+                    <EditText
+                        android:id="@+id/lawyer_type"
+                        android:inputType="text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/edit_text_blue_bg"
-                        android:padding="12dp"/>
-                </LinearLayout>
-
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
-
             <Button
                 android:id="@+id/postcase"
                 android:layout_marginTop="20dp"
