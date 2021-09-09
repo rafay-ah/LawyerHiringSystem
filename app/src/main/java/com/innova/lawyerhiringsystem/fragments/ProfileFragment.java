@@ -34,6 +34,7 @@ import com.innova.lawyerhiringsystem.GiveFeedback;
 import com.innova.lawyerhiringsystem.LawyerDashboard;
 import com.innova.lawyerhiringsystem.Login;
 import com.innova.lawyerhiringsystem.R;
+import com.innova.lawyerhiringsystem.ViewArticle;
 import com.innova.lawyerhiringsystem.WelcomeScreen;
 import com.innova.lawyerhiringsystem.model.Lawyer;
 
@@ -101,6 +102,14 @@ public class ProfileFragment extends Fragment {
             feedback.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     startActivity(new Intent(getActivity(), GiveFeedback.class));
+                }
+            });
+
+            // Articles button inflation for Lawyer
+            Button article = (Button) rootView.findViewById(R.id.articles);
+            article.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), ViewArticle.class));
                 }
             });
 

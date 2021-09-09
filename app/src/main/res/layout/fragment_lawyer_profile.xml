@@ -205,28 +205,52 @@ xmlns:tools="http://schemas.android.com/tools"
 
             </LinearLayout>
 
-            <Button
-                android:layout_gravity="right"
-                android:id="@+id/lawyer_feedback"
-                android:layout_marginTop="20dp"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/blue_button"
-                android:textColor="#ffffff"
-                android:drawableLeft="@drawable/describe"
-                android:text="Feedback" />
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <Button
+                    android:layout_gravity="start"
+                    android:id="@+id/articles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/blue_button"
+                    android:textColor="#ffffff"
+                    android:drawableLeft="@drawable/article"
+                    android:text="Articles"
+                  />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2.5"/>
+
+                <Button
+                    android:id="@+id/lawyer_feedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+
+                    android:background="@drawable/blue_button"
+                    android:drawableLeft="@drawable/describe"
+                    android:text="Feedback"
+                    android:textColor="#ffffff" />
+
+            </LinearLayout>
 
             <Button
-                android:layout_gravity="right"
                 android:id="@+id/lawyer_logout"
-                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="49dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/blue_button"
-                android:textColor="#ffffff"
                 android:drawableLeft="@drawable/signout"
-
-                android:text="  Logout  " />
+                android:text="  Logout  "
+                android:layout_marginRight="10dp"
+                android:textColor="#ffffff" />
 
         </LinearLayout>
     </ScrollView>

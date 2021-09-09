@@ -23,7 +23,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LawyerHiringSystem">
-        <activity android:name=".GiveFeedback"></activity>
+        <activity android:name=".PostArticle"></activity>
+        <activity android:name=".ViewArticle" />
+        <activity android:name=".GiveFeedback" />
         <activity android:name=".LawyerDashboard" />
         <activity android:name=".ClientDashboard" />
         <activity android:name=".Login" />
