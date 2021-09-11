@@ -1,8 +1,10 @@
 package com.innova.lawyerhiringsystem.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -10,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.innova.lawyerhiringsystem.PlaceBid;
 import com.innova.lawyerhiringsystem.R;
 import com.innova.lawyerhiringsystem.WelcomeScreen;
 import com.innova.lawyerhiringsystem.adapter.ViewQuotations;
@@ -34,8 +39,9 @@ public class QuotationsFragment extends Fragment {
 
     EditText query;
     String tittle;
-    public static ArrayList<Quotation> quotations;
+    public ArrayList<Quotation> quotations;
     Quotation quotation;
+    ListView listView;
 
     public QuotationsFragment() {
         // Required empty public constructor
@@ -91,12 +97,21 @@ public class QuotationsFragment extends Fragment {
                         // Create the adapter to convert the array to views
                         ViewQuotations adapter = new ViewQuotations(getActivity(), quotations);
                         // Attach the adapter to a ListView
-                        ListView listView =  rootview.findViewById(R.id.view_quotations);
+                        listView =  rootview.findViewById(R.id.view_quotations);
                         listView.setAdapter(adapter);
-//                        // only populate listview if it is not the first time fragment is created
-//                        ArrayAdapter adapter = new ArrayAdapter<String>(getActivity(),
-//                                R.layout.available_case_row, caseNames);
-//                        listCases.setAdapter(adapter);
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                                    long id) {
+                                // getting which item was clicked
+                                Quotation itemClicked = (Quotation) parent.getAdapter().getItem(position);
+//                                Log.i("selectedbid", itemClicked.getCaseTittle());
+                                confirmHire(itemClicked);
+                                adapter.clear();
+                            }
+                        });
+
+
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -105,6 +120,7 @@ public class QuotationsFragment extends Fragment {
                 });
             }
         });
+
         return rootview;
     }
 
@@ -112,5 +128,50 @@ public class QuotationsFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
 
+    }
+
+    public void confirmHire(Quotation quote)
+    {
+
+        if (quote.getStatus().equals("HIRED")){
+            Toast.makeText(getActivity(),"Lawyer Already Hired!",Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+//set icon
+                .setIcon(android.R.drawable.ic_dialog_alert)
+//set title
+                .setTitle("Confirm Lawyer")
+//set message
+                .setMessage("Are you sure you want to hire this Lawyer?")
+//set positive button
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //set what would happen when positive button is clicked
+                        quote.setStatus("HIRED");
+
+                        // update hiring status in DB
+                        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference writeQuotation = database.getReference("quotations");
+                        writeQuotation.child(quote.getLawyerid()).child(quote.getCaseTittle()).setValue(quote);
+
+                        Toast.makeText(getActivity(),"You have hired " + quote.getName(),Toast.LENGTH_LONG).show();
+
+                    }
+                })
+//set negative button
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //set what should happen when negative button is clicked
+                        Toast.makeText(getActivity(),"Selection Cancelled!",Toast.LENGTH_LONG).show();
+                    }
+                })
+                .show();
     }
 }

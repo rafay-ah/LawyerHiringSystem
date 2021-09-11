@@ -88,7 +88,7 @@ public class LawyerHomeFragment extends Fragment {
                     allCases += "☞  " + quotation.getCaseTittle() + "\n";
 
                     // only if the case status equal OPEN then it will be displayed as currently active case
-                    if (quotation.getStatus().equals("OPEN")){
+                    if (quotation.getStatus().equals("HIRED")){
                         openCases += "☞  " +  quotation.getCaseTittle() + "\n";
                     }
                 }
