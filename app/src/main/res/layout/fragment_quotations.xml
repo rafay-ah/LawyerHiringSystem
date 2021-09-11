@@ -9,7 +9,40 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="280dp"
+                android:layout_height="60dp">
+                <EditText
+                    android:drawableLeft="@drawable/search_icon"
+                    android:gravity="bottom"
+                    android:id="@+id/search_case"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter case tittle to view quotations"
+                    android:background="@drawable/edit_text_blue_bg"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/search_case_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@drawable/blue_button"
+               android:drawableBottom="@drawable/search_icon"
+                android:textColor="#ffffff"
+
+                />
+        </LinearLayout>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/case_history"
@@ -26,22 +59,19 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:weightSum="8"
-            android:gravity="center_vertical">
+            >
+
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textColor="#000000"
-                android:textStyle="bold"
-                android:gravity="center_vertical"
-                android:text=" Date"/>
+                android:layout_weight="1.2"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="Date"
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.4"
-                android:src="@drawable/arange"/>
+                android:textColor="#000000"
+                android:textStyle="bold" />
+
 
             <Space
                 android:layout_width="0dp"
@@ -50,17 +80,13 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:textColor="#000000"
                 android:textStyle="bold"
                 android:gravity="center_vertical"
                 android:text="Name"/>
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.4"
-                android:src="@drawable/sort"/>
+
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -69,17 +95,13 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:textColor="#000000"
                 android:textStyle="bold"
                 android:gravity="center_vertical"
                 android:text="Email"/>
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.4"
-                android:src="@drawable/sort"/>
+
 
             <Space
                 android:layout_width="0dp"
@@ -89,35 +111,29 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1.1"
+                android:layout_weight="1.2"
                 android:textColor="#000000"
                 android:textStyle="bold"
                 android:gravity="center_vertical"
                 android:text="Phone"/>
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.4"
-                android:src="@drawable/sort"/>
+
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.2"/>
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_gravity="end"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="Status"
                 android:textColor="#000000"
-                android:textStyle="bold"
-                android:gravity="center_vertical"
-                android:text="Status"/>
+                android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.4"
-                android:src="@drawable/sort"/>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
