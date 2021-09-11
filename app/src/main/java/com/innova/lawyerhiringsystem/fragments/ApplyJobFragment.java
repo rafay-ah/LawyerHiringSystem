@@ -3,6 +3,7 @@ package com.innova.lawyerhiringsystem.fragments;
 /* Role Specific to Lawyer Only
 * A fragment for viewing all available jobs
 * and present option to place bid*/
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.innova.lawyerhiringsystem.PlaceBid;
 import com.innova.lawyerhiringsystem.R;
 import com.innova.lawyerhiringsystem.model.Case;
 
@@ -81,7 +84,7 @@ public class ApplyJobFragment extends Fragment {
                         cases = innerChild.getValue(Case.class);
                         Log.i("cases", cases.getTittle());
 
-                        // only if the case status isOpen then it will be displayed as current case
+                        // only if the case status isOpen then it will be displayed in available cases
                         if (cases.isIsopen()){
                             openCases.add(cases);
 //                            caseNames[caseCounter] = (cases.getTittle());
@@ -92,7 +95,7 @@ public class ApplyJobFragment extends Fragment {
                 // extracting names of all obtained cases
                 caseNames = new String[openCases.size()];
                 for (int counter = 0; counter < openCases.size(); counter++) {
-                    caseNames[counter] = "☞ " + openCases.get(counter).getTittle();
+                    caseNames[counter] = openCases.get(counter).getTittle();
                     caseCounter++;
                 }
                 // only populate listview if it is not the first time fragment is created
@@ -106,6 +109,19 @@ public class ApplyJobFragment extends Fragment {
             }
         });
 
+        listCases.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                // getting which item was clicked
+                String itemClicked = (String) parent.getAdapter().getItem(position);
+                Log.i("bid", itemClicked);
+
+                Intent intent = new Intent(getActivity(), PlaceBid.class);
+                intent.putExtra("caseTittle", itemClicked);
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 
