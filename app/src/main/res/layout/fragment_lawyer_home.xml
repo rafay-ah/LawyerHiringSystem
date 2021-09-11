@@ -53,7 +53,7 @@
                     android:layout_width="match_parent"
                     android:layout_gravity="center_horizontal"
                     android:text="The previous cases you worked on will appear here."
-                    android:textAlignment="center"
+                    android:layout_marginStart="@dimen/content_left_margin"
                     android:layout_height="wrap_content"/>
 
             </RelativeLayout>
@@ -105,7 +105,8 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="15dp"
                     android:text="The cases you are currently working on will appear here."
-                    android:textAlignment="center" />
+                    android:layout_marginStart="@dimen/content_left_margin"
+                     />
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
