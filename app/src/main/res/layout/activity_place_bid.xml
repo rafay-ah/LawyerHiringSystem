@@ -186,4 +186,16 @@
         android:drawableLeft="@drawable/placequotation"
        />
 
+    <Button
+        android:id="@+id/open_cmb"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/blue_button"
+        android:textColor="#ffffff"
+        android:layout_gravity="right"
+        android:text="Open CMB"
+        android:drawableLeft="@drawable/message"
+        />
+
 </LinearLayout>

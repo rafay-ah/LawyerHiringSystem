@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.innova.lawyerhiringsystem.CMB;
 import com.innova.lawyerhiringsystem.PlaceBid;
 import com.innova.lawyerhiringsystem.R;
 import com.innova.lawyerhiringsystem.WelcomeScreen;
@@ -135,6 +136,7 @@ public class QuotationsFragment extends Fragment {
 
         if (quote.getStatus().equals("HIRED")){
             Toast.makeText(getActivity(),"Lawyer Already Hired!",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(getActivity(), CMB.class).putExtra("case", quote.getCaseTittle()));
             return;
         }
 
@@ -161,6 +163,11 @@ public class QuotationsFragment extends Fragment {
                         writeQuotation.child(quote.getLawyerid()).child(quote.getCaseTittle()).setValue(quote);
 
                         Toast.makeText(getActivity(),"You have hired " + quote.getName(),Toast.LENGTH_LONG).show();
+
+                        // After Hiring divert to Messaging board
+                        startActivity(new Intent(getActivity(), CMB.class).putExtra("casetittle", quote.getCaseTittle()));
+
+
 
                     }
                 })

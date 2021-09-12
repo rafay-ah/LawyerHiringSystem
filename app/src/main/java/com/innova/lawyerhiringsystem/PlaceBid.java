@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.innova.lawyerhiringsystem.adapter.ViewQuotations;
 import com.innova.lawyerhiringsystem.model.Case;
 import com.innova.lawyerhiringsystem.model.Lawyer;
 import com.innova.lawyerhiringsystem.model.Quotation;
@@ -37,12 +39,13 @@ import java.util.Locale;
 public class PlaceBid extends AppCompatActivity {
 
     TextView tittle, city, budget, statement, courtType, lawyerType;
-    Button applyBid;
+    Button applyBid, openMessages;
     String selectedCase;
     public static Case cases;
     private FirebaseAuth mAuth;
     Quotation lawyerQuotation;
     public static Lawyer profile = new Lawyer();
+    static boolean isHired = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +59,22 @@ public class PlaceBid extends AppCompatActivity {
         courtType = findViewById(R.id.set_case_court);
         lawyerType = findViewById(R.id.set_case_lawyer);
         applyBid= findViewById(R.id.apply_bid);
+        openMessages= findViewById(R.id.open_cmb);
+
         getIntentData();
         getCaseData();
 
         applyBid.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                placeQuotation();
+                    placeQuotation();
+            }
+        });
+
+        // case message board intent
+        openMessages.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+//                    Toast.makeText(PlaceBid.this,"Your Bid is Already Selected!",Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(PlaceBid.this, CMB.class).putExtra("case", selectedCase));
             }
         });
 
@@ -157,13 +170,42 @@ public class PlaceBid extends AppCompatActivity {
             }
         });
 
-//        lawyerQuotation = new Quotation(date,profile.getName(),profile.getEmail(),profile.getMobile(),"OPEN",selectedCase,user.getUid());
-//        DatabaseReference writeQuotation = database.getReference("quotations");
-//        // 'cases' node structure -> cases/userID/caseTittle
-//        writeQuotation.child(user.getUid()).child(selectedCase).setValue(lawyerQuotation);
-//
-//        Toast.makeText(PlaceBid.this, "Your quotation has been sent to client.",
-//                Toast.LENGTH_LONG).show();
+    }
+
+    public boolean getCaseStatus(){
+        // lawyer bid is already accepted
+        // get the status of bid placed by lawyer
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user= mAuth.getCurrentUser();
+
+         isHired=false;
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("quotations").child(user.getUid()).child(selectedCase);
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+
+                        Quotation quotation = dataSnapshot.getValue(Quotation.class);
+
+                        if (quotation.getStatus().equals("HIRED")){
+                            // This bid has been accepted
+                            // route to messaging dashboard
+                            isHired = true;
+                        }
+                }
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+        return isHired;
     }
 
 }
