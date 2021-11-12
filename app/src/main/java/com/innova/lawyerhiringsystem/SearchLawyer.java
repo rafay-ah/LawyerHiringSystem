@@ -1,7 +1,10 @@
 package com.innova.lawyerhiringsystem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialog;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,7 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +33,7 @@ public class SearchLawyer extends AppCompatActivity {
     ListView availbleLaweyersList;
     Button searchBtn;
     EditText searchLawyerType;
+    LinearLayout profile;
 
     String type;
     Lawyer lawyer;
@@ -43,6 +49,8 @@ public class SearchLawyer extends AppCompatActivity {
         availbleLaweyersList =findViewById(R.id.available_lawyers);
         searchBtn =findViewById(R.id.search_lawyerType_btn);
         searchLawyerType =findViewById(R.id.search_lawyerType);
+        profile= findViewById(R.id.displayProfile);
+        profile.setVisibility(View.GONE);
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) { // event listener for search button
@@ -86,9 +94,11 @@ public class SearchLawyer extends AppCompatActivity {
                             public void onItemClick(AdapterView<?> parent, View view, int position,
                                                     long id) {
                                 // getting which item was clicked
-                                Quotation itemClicked = (Quotation) parent.getAdapter().getItem(position);
-//                                Log.i("selectedbid", itemClicked.getCaseTittle());
+                                String itemClicked = (String) parent.getAdapter().getItem(position);
+                                Log.i("selectedType", itemClicked);
 //                                confirmHire(itemClicked);
+                                Lawyer selectedLawyer = lawyers.get(position);
+                                dispplayProfile(selectedLawyer);
 
                             }
                         });
@@ -103,6 +113,26 @@ public class SearchLawyer extends AppCompatActivity {
             }
         });
 
+    }
 
+    public void dispplayProfile(Lawyer Profile)
+    {
+        TextView lName = findViewById(R.id.sprofile_lawyername);
+        TextView lEmail =findViewById(R.id.sprofile_lawyeremail);
+        TextView lPhone =findViewById(R.id.sprofile_lawyermobile);
+        TextView lCity =findViewById(R.id.sprofile_lawyercity);
+        TextView lExperience = findViewById(R.id.sprofile_lawyerexperience);
+        TextView lId =findViewById(R.id.sprofile_lawyerid);
+        TextView lLocation= findViewById(R.id.sprofile_lawyeraddress);
+
+        lName.setText(String.valueOf(Profile.getName()));
+        lEmail.setText(String.valueOf(Profile.getEmail()));
+        lPhone.setText(String.valueOf(Profile.getMobile()));
+        lCity.setText(String.valueOf(Profile.getCity()));
+        lExperience.setText(String.valueOf(Profile.getExperience()));
+        lId.setText(String.valueOf(Profile.getLawyerId()));
+        lLocation.setText(String.valueOf(Profile.getAddress()));
+
+        profile.setVisibility(View.VISIBLE);
     }
 }
