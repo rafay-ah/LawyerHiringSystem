@@ -4,9 +4,18 @@ package com.innova.lawyerhiringsystem.model;
 *  Principally, used to retrieving data from Firebase Realtime database
 * */
 public class Lawyer {
-    String name, email, password, mobile, city,profession, lawyerId,experience, address;
+    String name;
+    String email;
+    String password;
+    String mobile;
+    String city;
+    String profession;
+    String lawyerId;
+    String experience;
+    String address;
+    String lawyerType;
 
-    public Lawyer(String name, String email, String password, String mobile, String city, String profession, String lawyerId, String experience, String address) {
+    public Lawyer(String name, String email, String password, String mobile, String city, String profession, String lawyerId, String experience, String address, String lawyerType) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -16,6 +25,7 @@ public class Lawyer {
         this.lawyerId = lawyerId;
         this.experience = experience;
         this.address = address;
+        this.lawyerType= lawyerType;
     }
 
     public Lawyer() {
@@ -91,5 +101,13 @@ public class Lawyer {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getLawyerType() {
+        return lawyerType;
+    }
+
+    public void setLawyerType(String lawyerType) {
+        this.lawyerType = lawyerType;
     }
 }

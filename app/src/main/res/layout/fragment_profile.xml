@@ -150,6 +150,17 @@
 
             <Button
                 android:layout_gravity="right"
+                android:id="@+id/search_lawyer"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/blue_button"
+                android:textColor="#ffffff"
+                android:drawableLeft="@drawable/search_icon"
+                android:text="Search  " />
+
+            <Button
+                android:layout_gravity="right"
                 android:id="@+id/client_logout"
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"

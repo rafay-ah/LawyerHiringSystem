@@ -69,7 +69,7 @@ public class Register extends AppCompatActivity {
     LinearLayout lawyerPart;
     HashMap<String, String> enteredData = new HashMap<String, String>();
     Bitmap bitmap;
-    EditText name, email, password, lawyerId, city, officeAddress, exp, phone, lawyer_id_a, lawyer_id_b;
+    EditText name, email, password, lawyerId, city, officeAddress, exp, phone, lawyer_id_a, lawyer_id_b, lawyerType;
 
     private int PICK_IMAGE_REQUEST = 1;
 
@@ -91,6 +91,7 @@ public class Register extends AppCompatActivity {
         accept = (CheckBox) findViewById(R.id.accept);
         phone = (EditText) findViewById(R.id.etxt_phone);
         city = (EditText) findViewById(R.id.spnr_city);
+        lawyerType = (EditText) findViewById(R.id.type_lawyer);
 
         shake = AnimationUtils.loadAnimation(this, R.anim.shakeanim);
 
@@ -204,6 +205,7 @@ public class Register extends AppCompatActivity {
                     enteredData.put("lawyerId", spnr_lawyer_loc.getSelectedItem().toString() + "/" + lawyer_id_a.getText().toString().toUpperCase().trim() + "/" + lawyer_id_b.getText().toString());
                     enteredData.put("experience", exp.getText().toString());
                     enteredData.put("address", officeAddress.getText().toString().trim());
+                    enteredData.put("lawyerType", lawyerType.getText().toString().trim());
 
                     register(enteredData);
                 }
