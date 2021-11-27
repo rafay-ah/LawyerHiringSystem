@@ -12,9 +12,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.innova.lawyerhiringsystem.getstarted.GetStarted;
+
 public class WelcomeScreen extends AppCompatActivity {
 
-    TextView appMotto;
+    TextView appMotto, getStarted;
     Button register, login;
 
 
@@ -46,5 +48,15 @@ public class WelcomeScreen extends AppCompatActivity {
                 finish();
             }
         });
+
+        getStarted = findViewById(R.id.getstarted);
+        getStarted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(WelcomeScreen.this, GetStarted.class));
+                finish();
+            }
+        });
+
     }
 }

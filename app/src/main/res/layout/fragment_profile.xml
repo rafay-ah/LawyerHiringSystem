@@ -145,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/blue_button"
                 android:textColor="#ffffff"
-                android:drawableLeft="@drawable/describe"
+                android:drawableLeft="@drawable/describe_lawyer"
                 android:text="Feedback" />
 
             <Button

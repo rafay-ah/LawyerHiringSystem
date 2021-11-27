@@ -234,7 +234,7 @@ xmlns:tools="http://schemas.android.com/tools"
                     android:layout_gravity="end"
 
                     android:background="@drawable/blue_button"
-                    android:drawableLeft="@drawable/describe"
+                    android:drawableLeft="@drawable/describe_lawyer"
                     android:text="Feedback"
                     android:textColor="#ffffff" />
 

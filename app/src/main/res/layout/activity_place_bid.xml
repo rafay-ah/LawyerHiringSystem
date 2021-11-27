@@ -116,7 +116,7 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/describe"
+            android:src="@drawable/describe_lawyer"
             android:layout_margin="8dp"/>
         <TextView
             android:layout_marginStart="@dimen/content_left_margin"
