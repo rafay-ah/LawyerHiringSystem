@@ -22,7 +22,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.LawyerHiringSystem">
-        <activity android:name=".getstarted.GetStarted"></activity>
+        <activity android:name=".ViewCaseDetails"></activity>
+        <activity android:name=".getstarted.GetStarted" />
         <activity android:name=".SearchLawyer" />
         <activity android:name=".CMB" />
         <activity android:name=".PlaceBid" />

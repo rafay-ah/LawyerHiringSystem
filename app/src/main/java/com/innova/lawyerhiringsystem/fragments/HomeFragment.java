@@ -3,15 +3,23 @@ package com.innova.lawyerhiringsystem.fragments;
 /*This is fragment of 'Home' option
  * Will show the user current, previous cases and other stats
  * */
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,14 +29,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.innova.lawyerhiringsystem.PlaceBid;
 import com.innova.lawyerhiringsystem.R;
+import com.innova.lawyerhiringsystem.ViewCaseDetails;
 import com.innova.lawyerhiringsystem.model.Article;
 import com.innova.lawyerhiringsystem.model.Case;
+import com.innova.lawyerhiringsystem.model.Lawyer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
     String openCases, allCases;
+    ArrayList<Case> userCases;
+    ArrayList<String> userCasesTittle;
     private FirebaseAuth mAuth;
-    TextView previousCases, currentCases;
+    TextView  currentCases;
+    ListView previousCases;
     Case cases;
 
     public HomeFragment() {
@@ -43,23 +60,45 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootview = inflater.inflate(R.layout.fragment_home, container, false);
+        userCases = new ArrayList<Case>();
+        userCasesTittle = new ArrayList<String>();
 
         previousCases = rootview.findViewById(R.id.content_case_history);
+        previousCases.setDivider(null);
+
         currentCases = rootview.findViewById(R.id.content_current_case);
         Typeface face = Typeface.createFromAsset(getContext().getAssets(),
                 "fonts/segoeui.ttf");
-        previousCases.setTypeface(face);
         currentCases.setTypeface(face);
         loadCases();
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                getActivity(),
+                android.R.layout.simple_list_item_1,
+                userCasesTittle);
+
+        previousCases.setAdapter(arrayAdapter);
+
+        previousCases.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                // getting which item was clicked
+                String itemClicked = (String) parent.getAdapter().getItem(position);
+                Log.i("selectedType", itemClicked);
+
+                Intent intent = new Intent(getActivity(), ViewCaseDetails.class);
+                intent.putExtra("caseTittle", itemClicked);
+                startActivity(intent);
+
+
+
+            }
+        });
         return rootview;
     }
 
@@ -80,8 +119,10 @@ public class HomeFragment extends Fragment {
                 allCases = "";
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     cases = child.getValue(Case.class);
-                    Log.i("cases", cases.getTittle());
-                    allCases += "☞  " + cases.getTittle() + "\n";
+//                    Log.i("cases", cases.getTittle());
+//                    allCases += "☞  " + cases.getTittle()+ "\n";
+
+                    userCasesTittle.add(cases.getTittle());
 
                     // only if the case status isOpen then it will be displayed as current case
                     if (cases.isIsopen()){
@@ -89,7 +130,8 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                previousCases.setText(allCases);
+//                previousCases.setText(allCases);
+
                 currentCases.setText(openCases);
             }
 
@@ -101,4 +143,6 @@ public class HomeFragment extends Fragment {
 
 
     }
+
+
 }

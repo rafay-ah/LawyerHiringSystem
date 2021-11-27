@@ -46,14 +46,12 @@
                 android:gravity="center_horizontal"
                 android:text="Your Case History"
                 />
-            <TextView
+            <ListView
                 android:id="@+id/content_case_history"
                 android:layout_marginTop="15dp"
                 android:layout_below="@+id/heading_casehistory"
                 android:layout_width="match_parent"
-                android:text="Your Case History Will be Visible Here"
-                android:textSize="15dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"/>
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
