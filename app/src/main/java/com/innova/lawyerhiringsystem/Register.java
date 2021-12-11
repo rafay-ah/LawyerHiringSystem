@@ -206,6 +206,8 @@ public class Register extends AppCompatActivity {
                     enteredData.put("experience", exp.getText().toString());
                     enteredData.put("address", officeAddress.getText().toString().trim());
                     enteredData.put("lawyerType", lawyerType.getText().toString().trim());
+                    enteredData.put("courtType", " ");
+                    enteredData.put("user_id"," " );
 
                     register(enteredData);
                 }

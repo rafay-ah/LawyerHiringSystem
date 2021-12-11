@@ -125,7 +125,7 @@ public class HomeFragment extends Fragment {
                     userCasesTittle.add(cases.getTittle());
 
                     // only if the case status isOpen then it will be displayed as current case
-                    if (cases.isIsopen()){
+                    if (cases.isIsopen() == "true"){
                         openCases += "☞  " +  cases.getTittle() + "\n";
                     }
                 }

@@ -82,10 +82,10 @@ public class ApplyJobFragment extends Fragment {
                     for (DataSnapshot innerChild : child.getChildren())
                     {
                         cases = innerChild.getValue(Case.class);
-                        Log.i("cases", cases.getTittle());
+//                        Log.i("cases", cases.getTittle());
 
                         // only if the case status isOpen then it will be displayed in available cases
-                        if (cases.isIsopen()){
+                        if (cases.isIsopen()== "true"){
                             openCases.add(cases);
 //                            caseNames[caseCounter] = (cases.getTittle());
 //                            caseCounter++;
@@ -142,7 +142,7 @@ public class ApplyJobFragment extends Fragment {
                         Log.i("cases", cases.getTittle());
 
                         // only if the case status isOpen then it will be displayed as current case
-                        if (cases.isIsopen()){
+                        if (cases.isIsopen() == "true"){
                             openCases.add(cases);
 //                            caseNames[caseCounter] = (cases.getTittle());
 //                            caseCounter++;

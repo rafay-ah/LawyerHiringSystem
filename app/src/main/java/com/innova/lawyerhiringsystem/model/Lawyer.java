@@ -14,8 +14,26 @@ public class Lawyer {
     String experience;
     String address;
     String lawyerType;
+    String courtType;
+    String user_id;
 
-    public Lawyer(String name, String email, String password, String mobile, String city, String profession, String lawyerId, String experience, String address, String lawyerType) {
+//    public Lawyer(String name, String email, String password, String mobile, String city, String profession, String lawyerId, String experience, String address, String lawyerType) {
+//        this.name = name;
+//        this.email = email;
+//        this.password = password;
+//        this.mobile = mobile;
+//        this.city = city;
+//        this.profession = profession;
+//        this.lawyerId = lawyerId;
+//        this.experience = experience;
+//        this.address = address;
+//        this.lawyerType= lawyerType;
+//    }
+
+    public Lawyer() {
+    }
+
+    public Lawyer(String name, String email, String password, String mobile, String city, String profession, String lawyerId, String experience, String address, String lawyerType, String courtType, String user_id) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -25,10 +43,25 @@ public class Lawyer {
         this.lawyerId = lawyerId;
         this.experience = experience;
         this.address = address;
-        this.lawyerType= lawyerType;
+        this.lawyerType = lawyerType;
+        this.courtType = courtType;
+        this.user_id = user_id;
     }
 
-    public Lawyer() {
+    public String getCourtType() {
+        return courtType;
+    }
+
+    public void setCourtType(String courtType) {
+        this.courtType = courtType;
+    }
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getName() {
