@@ -3,16 +3,12 @@ package com.innova.lawyerhiringsystem.fragments;
 /*This is fragment of 'Home' option
  * Will show the user current, previous cases and other stats
  * */
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.innova.lawyerhiringsystem.PlaceBid;
 import com.innova.lawyerhiringsystem.R;
 import com.innova.lawyerhiringsystem.ViewCaseDetails;
 import com.innova.lawyerhiringsystem.model.Article;
@@ -37,7 +32,6 @@ import com.innova.lawyerhiringsystem.model.Case;
 import com.innova.lawyerhiringsystem.model.Lawyer;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomeFragment extends Fragment {
     String openCases, allCases;
@@ -122,11 +116,11 @@ public class HomeFragment extends Fragment {
 //                    Log.i("cases", cases.getTittle());
 //                    allCases += "☞  " + cases.getTittle()+ "\n";
 
-                    userCasesTittle.add(cases.getTittle());
+                    userCasesTittle.add(cases.getTitle());
 
                     // only if the case status isOpen then it will be displayed as current case
-                    if (cases.isIsopen() == "true"){
-                        openCases += "☞  " +  cases.getTittle() + "\n";
+                    if (cases.isIsopen()){
+                        openCases += "☞  " +  cases.getTitle() + "\n";
                     }
                 }
 

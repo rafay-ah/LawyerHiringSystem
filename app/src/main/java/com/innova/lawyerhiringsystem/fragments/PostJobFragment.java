@@ -99,7 +99,7 @@ public class PostJobFragment extends Fragment {
         lwrType = lawyerType.getText().toString().trim();
         email = user.getEmail();
         uid = user.getUid();
-        Case clientCase = new Case(caseTittle,caseCity,caseBudget,caseStatment,crtType,lwrType,email,"","true", 0," ", uid);
+        Case clientCase = new Case(caseTittle,caseCity,caseBudget,caseStatment,crtType,lwrType,email,"",true, 0," ", uid);
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("cases");

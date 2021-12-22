@@ -4,7 +4,6 @@ package com.innova.lawyerhiringsystem.fragments;
 * A fragment for viewing all available jobs
 * and present option to place bid*/
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,8 +26,6 @@ import com.innova.lawyerhiringsystem.R;
 import com.innova.lawyerhiringsystem.model.Case;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class ApplyJobFragment extends Fragment {
     ListView listCases;
@@ -85,7 +81,7 @@ public class ApplyJobFragment extends Fragment {
 //                        Log.i("cases", cases.getTittle());
 
                         // only if the case status isOpen then it will be displayed in available cases
-                        if (cases.isIsopen()== "true"){
+                        if (cases.isIsopen()){
                             openCases.add(cases);
 //                            caseNames[caseCounter] = (cases.getTittle());
 //                            caseCounter++;
@@ -95,7 +91,7 @@ public class ApplyJobFragment extends Fragment {
                 // extracting names of all obtained cases
                 caseNames = new String[openCases.size()];
                 for (int counter = 0; counter < openCases.size(); counter++) {
-                    caseNames[counter] = openCases.get(counter).getTittle();
+                    caseNames[counter] = openCases.get(counter).getTitle();
                     caseCounter++;
                 }
                 // only populate listview if it is not the first time fragment is created
@@ -139,10 +135,10 @@ public class ApplyJobFragment extends Fragment {
                     for (DataSnapshot innerChild : child.getChildren())
                     {
                         cases = innerChild.getValue(Case.class);
-                        Log.i("cases", cases.getTittle());
+                        Log.i("cases", cases.getTitle());
 
                         // only if the case status isOpen then it will be displayed as current case
-                        if (cases.isIsopen() == "true"){
+                        if (cases.isIsopen()){
                             openCases.add(cases);
 //                            caseNames[caseCounter] = (cases.getTittle());
 //                            caseCounter++;
@@ -153,7 +149,7 @@ public class ApplyJobFragment extends Fragment {
                 // extracting names of all obtained cases
                 caseNames = new String[openCases.size()];
                 for (int counter = 0; counter < openCases.size(); counter++) {
-                    caseNames[counter] = openCases.get(counter).getTittle();
+                    caseNames[counter] = openCases.get(counter).getTitle();
                     caseCounter++;
                 }
             }

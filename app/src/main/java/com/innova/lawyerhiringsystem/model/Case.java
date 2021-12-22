@@ -6,8 +6,8 @@ package com.innova.lawyerhiringsystem.model;
 * user can have multiple cases
 * a case can belong to only one user*/
 public class Case {
-    String tittle, city, budget, statement, courttype, lawyertype,email, hiredlawyer;
-    String isopen; // default will be true until layer is assigned
+    String title, city, budget, statement, courttype, lawyertype,email, hiredlawyer;
+    Boolean isopen; // default will be true until layer is assigned
     int applications;
     String case_id, user_id;
 
@@ -26,9 +26,9 @@ public class Case {
 //        this.isopen = isopen;
 //    }
 
-    public Case(String tittle, String city, String budget, String statement, String courttype, String lawyertype, String email, String isopen) {
+    public Case(String title, String city, String budget, String statement, String courttype, String lawyertype, String email, Boolean isopen) {
         // will be put in use to create objects locally
-        this.tittle = tittle;
+        this.title = title;
         this.city = city;
         this.budget = budget;
         this.statement = statement;
@@ -38,8 +38,8 @@ public class Case {
         this.isopen = isopen;
     }
 
-    public Case(String tittle, String city, String budget, String statement, String courttype, String lawyertype, String email, String hiredlawyer, String isopen, int applications, String case_id, String user_id) {
-        this.tittle = tittle;
+    public Case(String title, String city, String budget, String statement, String courttype, String lawyertype, String email, String hiredlawyer, Boolean isopen, int applications, String case_id, String user_id) {
+        this.title = title;
         this.city = city;
         this.budget = budget;
         this.statement = statement;
@@ -77,12 +77,12 @@ public class Case {
         this.user_id = user_id;
     }
 
-    public String getTittle() {
-        return tittle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTittle(String tittle) {
-        this.tittle = tittle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getCity() {
@@ -141,11 +141,11 @@ public class Case {
         this.hiredlawyer = hiredlawyer;
     }
 
-    public String isIsopen() {
+    public Boolean isIsopen() {
         return isopen;
     }
 
-    public void setIsopen(String isopen) {
+    public void setIsopen(Boolean isopen) {
         this.isopen = isopen;
     }
 }

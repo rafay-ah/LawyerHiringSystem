@@ -8,10 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -106,10 +103,10 @@ public class PlaceBid extends AppCompatActivity {
                     for (DataSnapshot innerChild : child.getChildren())
                     {
                         cases = innerChild.getValue(Case.class);
-                        Log.i("cases", cases.getTittle());
+                        Log.i("cases", cases.getTitle());
 
-                        if (cases.getTittle().equals(selectedCase)){
-                            tittle.setText(cases.getTittle());
+                        if (cases.getTitle().equals(selectedCase)){
+                            tittle.setText(cases.getTitle());
                             city.setText(cases.getCity());
                             budget.setText(cases.getBudget());
                             statement.setText(cases.getStatement());
